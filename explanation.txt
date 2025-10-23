@@ -1,0 +1,232 @@
+What this script does (simple)
+Purpose: A command-line customer support chatbot for an e-commerce store.
+How it answers: Combines company policies + your customer/order data + optional local documents (RAG) + a Groq AI model to generate replies.
+Languages: English and Spanish built-in, with automatic translation for other languages if needed.
+Main parts
+Internationalization (
+t()
+ and LANG_STRINGS)
+Simple translation layer for UI text. If a string is missing in your chosen language, it can auto-translate via Groq and cache it in i18n_cache.json.
+Groq setup (
+GroqConfig
+, 
+create_groq_client()
+)
+Reads GROQ_API_KEY, GROQ_MODEL, and GROQ_EMBEDDING_MODEL from environment or config.json.
+Tries to connect and falls back to other models if the chosen one isn’t available.
+SQLite mini-DB (
+DatabaseManager
+)
+Creates ecommerce.db with sample tables: customers, products, orders.
+Provides lookups:
+get_customer_by_email(email)
+ returns 
+CustomerData
+get_order_by_id(order_id)
+ returns 
+OrderInfo
+get_product_by_id(product_id)
+ returns 
+ProductInfo
+Knowledge base
+In-code policy snippets (returns, shipping, warranty, payment, account). See 
+EcommerceSupport._initialize_knowledge_base()
+.
+RAG vector store (document search)
+You can index a folder of .txt/.md/.pdf/.docx via 
+index_documents_directory()
+ to enrich answers.
+Tries Groq embeddings first; if not available, switches to TF‑IDF automatically.
+_rag_search(query)
+ finds top-matching chunks to add as context.
+Answer generation (
+EcommerceSupport.process_query()
+)
+Checks for escalation keywords (e.g., “legal”, “sue”, “urgent”). If detected, returns an escalation response.
+Gathers context:
+Company policies (scored via a quick Groq relevance check in 
+_get_relevant_documents()
+)
+Customer/order info (
+_get_customer_context()
+)
+RAG document snippets (
+_rag_search()
+)
+Sends user query + context to Groq chat completion and returns the reply, plus a list of sources used.
+Interactive CLI (
+interactive_chat()
+)
+Asks for language, email, order ID, and optional docs folder (for RAG).
+You type questions; it answers, shows sources, and you can type quit to exit.
+Entry point: if __name__ == "__main__": asyncio.run(interactive_chat())
+What you need to run it
+Python packages: groq, aiohttp, scikit-learn, optional pypdf (PDF), python-docx (DOCX).
+Config: Set GROQ_API_KEY (env var) or put it in config.json in the same folder as 
+main.py
+:
+json
+{
+  "api_key": "YOUR_KEY",
+  "model": "llama-3.1-8b-instant",
+  "embedding_model": "text-embedding-3-small"
+}
+Then run: python main.py and follow the prompts.
+Typical flow
+Start chat → choose language → enter email/order → optionally point to a docs folder.
+Ask a question (e.g., “Where’s my order?”).
+Script pulls policies, your order/customer info, and any indexed docs, then asks Groq to answer.
+Shows the answer and the sources used.
+If sensitive/critical keywords appear, it suggests escalation to a human.
+Key files and functions to know
+main.py
+EcommerceSupport.process_query()
+ – builds context and calls Groq.
+DatabaseManager.init_database()
+ – creates sample data.
+index_documents_directory()
+ – indexes your docs for RAG.
+interactive_chat()
+ – the CLI loop.
+If you want, I can help you set up the environment and run it step-by-step.
+
+Feedback submitted
+
+
+explain me how the output will be and what is happing internally
+
+What you’ll see as output
+Startup prompts
+Language choice: shows Select language (en/es):
+Email: shows Enter your email:
+Order ID: shows Enter your order ID:
+Optional docs folder: Docs directory to index for RAG (optional):
+Chat loop
+Your input line shows as 🧑 You: 
+The assistant replies as 🤖 Assistant: <answer>
+If needed, it prints 📚 Sources: <list> to show where info came from
+Shows a divider line of dashes
+Type quit or exit to leave; it prints a goodbye message
+Example:
+
+Select language (en/es): en
+Enter your email: john.doe@email.com
+Enter your order ID: ORD001
+Docs directory to index for RAG (optional):
+
+🧑 You: Where is my order?
+🤖 Assistant: Your order ORD001 is currently Shipped. Estimated delivery is 2024-09-22. Tracking: TRK123456789.
+📚 Sources: Company Knowledge Base, Customer Account Data
+--------------------------------------------------
+If the message triggers escalation (e.g., contains “legal”, “sue”, “urgent”):
+
+🤖 Assistant: I understand this is an important matter... connecting you with a specialist.
+⚠ Escalation required. Connecting you to a human agent...
+--------------------------------------------------
+What happens internally (simple)
+Program starts in 
+main.py
+ at 
+interactive_chat()
+:
+Asks for language, email, order ID, and an optional docs folder.
+It builds the assistant via 
+EcommerceSupport.init()
+:
+Loads Groq config from env or config.json using 
+GroqConfig.load_config()
+.
+Creates a Groq client with fallbacks in 
+create_groq_client()
+.
+Sets up translations (dynamic using Groq if a string is missing) through 
+DynamicTranslator
+.
+Creates a SQLite DB (ecommerce.db) with sample data in 
+DatabaseManager.init_database()
+.
+Loads built-in policy docs in 
+_initialize_knowledge_base()
+.
+Prepares a vector store for RAG in 
+_init_vector_store()
+.
+If you provided a docs folder, it indexes files with 
+index_documents_directory()
+:
+Reads .txt/.md/.pdf/.docx via 
+_read_file_text()
+.
+Splits text into chunks with 
+_chunk_text()
+.
+Tries to get embeddings from Groq; if not available, switches to TF‑IDF automatically.
+Stores chunks (and embeddings if available) in vector_store.json.
+Each time you ask a question 
+process_query()
+ runs:
+Checks for escalation keywords with 
+_should_escalate()
+. If matched → returns an escalation message immediately.
+Builds context:
+Company policies ranked by relevance via 
+_get_relevant_documents()
+ (asks Groq to score relevance 0–100).
+Customer/order details via 
+_get_customer_context()
+ using 
+DatabaseManager
+.
+RAG: finds relevant chunks with 
+_rag_search()
+ (cosine similarity if embeddings; otherwise TF‑IDF).
+Forms a system prompt with the above context and calls Groq chat: groq_client.chat.completions.create(...).
+Saves your Q&A in conversation_history.
+Computes the list of “Sources”:
+“Company Knowledge Base” if policies used
+“Customer Account Data” if account/order used
+Filenames from RAG hits (if any)
+Returns a response payload printed by 
+interactive_chat()
+.
+Translations
+UI strings use 
+t(key, lang)
+ to pull from LANG_STRINGS.
+If a string isn’t available for the chosen language and Groq is configured, 
+DynamicTranslator.translate()
+ generates and caches it in i18n_cache.json.
+Errors and fallbacks
+Missing/invalid embeddings model → switches to TF‑IDF (_embedding_backend='tfidf').
+PDF/DOCX support missing → it logs a warning and skips those files.
+API/key errors → returns a generic “technical difficulties” message and sets escalate=True.
+Where to look in code
+Entry: 
+interactive_chat()
+ in 
+main.py
+Core flow: 
+EcommerceSupport.process_query()
+Customer/order lookup: 
+DatabaseManager.get_customer_by_email()
+, 
+get_order_by_id()
+Policies: 
+_initialize_knowledge_base()
+RAG: 
+index_documents_directory()
+, 
+_rag_search()
+, 
+_embed_texts()
+Groq setup: 
+GroqConfig.load_config()
+, 
+create_groq_client()
+Translations: 
+t()
+, 
+DynamicTranslator.translate()
+Summary
+Output: a friendly Q&A loop in your terminal with optional sources and escalation.
+Internally: the assistant merges policy snippets, your account/order data, and optional local docs, then asks the Groq model to generate a concise answer, with safe fallbacks (TF‑IDF, static strings) when APIs or models aren’t available.

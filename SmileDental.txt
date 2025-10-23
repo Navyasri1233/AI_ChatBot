@@ -1,0 +1,91 @@
+SERVICES
+-----------------------------------
+1. Cosmetic Dentistry
+	1.1 Bad Breath
+	1.2 Cavities on teeth
+	1.3 Dental Bridges
+	1.4 Dental Fear & anxiety
+	1.5 Dental Veneers
+	1.6 Dental Filling
+	1.7 Discoloration of teeth
+	1.8 Mouth Guard
+	1.9 Mouth ulcers
+	1.10 Prepping tooth for dental crown
+	1.11 Prophylaxis
+	1.12 Removable partial denture 
+	1.13 Sensitive teeth
+	1.14 Why teeth are important?
+	1.15 Teeth Based Overdenture
+	1.16 TMJ syndrome
+	1.17 Types of Dental Bridges
+	1.18 Whitening your teeth
+2.Child Dental Care
+	2.1 Baby's teething
+	2.2 Cleft Lip & Cleft palate
+	2.3 First Dental visit for child
+	2.4 Thumb sucking
+3.Dental Implants
+	3.1 Basal Implants
+	3.2 Dental Implants on same day 
+	3.3 Fixed Tooth Replacement in 30 minutes
+	3.4 Getting Your Tooth "screwed"?
+	3.5 Hygiene
+	3.6 Implant failure
+	3.7 Implant based Prosthesis 
+	3.8 Implant Retained Overdentures
+	3.9 sinus Lift Procedure
+	3.10 Teeth Cleaning
+	3.11 Types of Dental implants
+4.Dental Fillers
+ 	4.1 Botox
+5.Dental Emergency
+	5.1 Cavities
+	5.2 Oral Hygiene during pregnancy
+	5.3 Sports Dentistry
+	5.4 Broke Your Teeth 
+6.Fixed Braces
+	6.1 Clear bite aligners
+	6.2 Fixed Braces
+	6.3 Invisalign Braces
+	6.4 Orthodontic Dentistry
+	6.5 Oral Care during braces
+	6.6 Retainers for teeth
+	6.7 TOOTH COLOURED BRACES
+7.Laser Dental Treatments
+	7.1 Flap Surgery
+	7.2 FRENECTOMY 
+	7.3 Gum Recession 
+	7.4 OPERCULECTOMY
+	7.5 Periodontal Treatment
+8.Oral Cancer
+9.Root canal Treatment
+	9.1 Apicectomy 
+	9.2 Crown After Root Canal?
+	9.3 Root Canal Treatment
+	9.4 Sealing Tooth Grooves
+	9.5 single visit root canal therapy
+	9.6 tooth cavities
+	9.7 Tooth Abscess/Tooth Swelling
+10.Smile Designing
+	10.1 Oral Health vs Diabetes
+	10.2 Sensitive Tooth
+	10.3 Smile Makeover
+	10.4 Teeth Whitening 
+	10.5 Tooth Erosion 
+	10.6 Tooth Jewelry
+11.Tooth Extraction
+	11.1 ALVEOLOPLASTY
+	11.2 Loose Tooth
+	11.3 Tooth stuck in gums
+	11.4 Bleeding Gums
+	11.5 Teeth enamel
+	11.6 Tooth restored in single visit
+	11.7 Third molar/ impacted tooth
+	11.8 wisdom teeth
+12.Dental Tourism
+	12.1 Smile Dental Tourism
+	12.2 Travel Tips
+13.Sedation Dentistry
+14.Types of Retainers
+
+

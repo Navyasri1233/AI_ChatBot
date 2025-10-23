@@ -1,0 +1,21 @@
+{
+  "& c:/users/user/appdata/local/programs/python/python313/python.exe c:/users/user/onedrive/desktop/ai/main.py": {
+    "\n🤖 Welcome to the E-commerce Customer Support Assistant!": "¡Bienvenido al asistente de soporte para clientes de comercio electrónico!",
+    "Type your question below. Type 'quit' to exit.\n": "Попробуйте введите свой вопрос ниже. Напишите 'quit', чтобы выйти.",
+    "Enter your email: ": "Введите свой Email:"
+  },
+  "english": {
+    "\n🤖 Welcome to the E-commerce Customer Support Assistant!": "🤖 Welcome to the E-commerce Customer Support Assistant!",
+    "Type your question below. Type 'quit' to exit.\n": "Type your question below. Type 'quit' to exit.",
+    "Enter your email: ": "Enter your email:",
+    "Enter your order ID: ": "Enter your order ID:",
+    "\n🧑 You: ": "You",
+    "🤖 Assistant: ": "🤖 Assistant:",
+    "--------------------------------------------------": "Horizontal Line"
+  },
+  "& c:/users/user/onedrive/desktop/chatbot/chatbot/scripts/python.exe c:/users/user/onedrive/desktop/chatbot/main.py": {
+    "\n🤖 Welcome to the E-commerce Customer Support Assistant!": "Bienvenue chez l'assistant de support client E-commerce ! 🤖",
+    "Type your question below. Type 'quit' to exit.\n": "Escribe tu pregunta a continuación. Escribe 'salir' para salir.",
+    "Enter your email: ": "Please enter your email:"
+  }
+}
